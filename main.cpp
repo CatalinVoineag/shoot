@@ -9,6 +9,7 @@ int main(void) {
   EventBus* bus = EventBus::getInstance();
 
   InitWindow(800, 550, "Shoot");
+  InitAudioDevice();
   GameScene gameScene = GameScene();
 
   SetTargetFPS(60);

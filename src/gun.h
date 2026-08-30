@@ -1,24 +1,21 @@
 #pragma once
-#include <memory>
 #include <raylib.h>
 #include "engine/eventBus.h"
-#include "gun.h"
 
-class Player {
-  enum facing { LEFT, RIGHT, UP, DOWN };
-  enum state { IDDLE, RUN };
-
+class Gun {
   public:
-  Player() : gun(std::make_shared<Gun>()) {}
+  enum facing { LEFT, RIGHT };
+  enum state { RELOAD, IDDLE, SHOOT };
   void tick();
   void update();
   void handleEvent();
   void handleMovement();
+  void handleKeyPress();
 
   void unload() {
     UnloadTexture(idleTexture);
-    UnloadTexture(runTexture);
-    gun->unload();
+    UnloadWave(fireWave);
+    UnloadSound(fireSound);
   }
 
   Vector2 getPosition() {
@@ -26,8 +23,9 @@ class Player {
   }
 
   private:
-  Texture2D idleTexture = LoadTexture("assets/player_idle.png");
-  Texture2D runTexture = LoadTexture("assets/player_run.png");
+  Texture2D idleTexture = LoadTexture("assets/assaultrifle.png");
+  Wave fireWave = LoadWave("assets/sounds/556/single.wav");
+  Sound fireSound = LoadSoundFromWave(fireWave);
   void handleWallCollision();
   facing Facing = RIGHT;
   state State = IDDLE;
@@ -35,9 +33,5 @@ class Player {
   float lastFrameTime = 0.f;
   int animationFrame = 0;
   EventBus* bus = EventBus::getInstance();
-  std::shared_ptr<Gun> gun;
-
-  Texture2D textureToRender();
-  int textureIndex();
 };
 

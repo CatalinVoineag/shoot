@@ -1,6 +1,7 @@
 #include "player.h"
 #include "raylib.h"
 #include "raymath.h"
+#include "config.h"
 
 const inline int PIXELS_PER_METER{50};
 // Meters per second
@@ -10,6 +11,8 @@ void Player::handleEvent() { }
 
 void Player::tick() {
   handleMovement();
+  gun->tick();
+
   lastFrameTime += GetFrameTime();
 }
 
@@ -33,6 +36,7 @@ void Player::update() {
   };
 
   DrawTexturePro(textureToRender(), srcrec, dstrec, {0, 0}, 0, WHITE);
+  gun->update();
 }
 
 void Player::handleMovement() {

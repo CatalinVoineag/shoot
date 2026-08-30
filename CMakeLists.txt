@@ -16,6 +16,7 @@ add_executable(Shoot
   main.cpp
   src/cpp/gameScene.cpp
   src/cpp/player.cpp
+  src/cpp/gun.cpp
 )
 
 target_include_directories(Shoot PRIVATE src ${CMAKE_CURRENT_SOURCE_DIR})
