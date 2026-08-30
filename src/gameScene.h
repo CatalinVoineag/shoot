@@ -11,6 +11,7 @@ class GameScene {
 
   void tick();
   void handleEvent();
+  void sendEvents();
   void update();
   void render();
   void unload() {

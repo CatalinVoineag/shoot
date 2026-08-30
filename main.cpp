@@ -17,6 +17,7 @@ int main(void) {
     BeginDrawing();
     ClearBackground(BLACK);
 
+    gameScene.sendEvents();
     gameScene.tick(); 
     while (bus->size() > 0) {
       gameScene.handleEvent();

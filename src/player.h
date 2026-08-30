@@ -32,6 +32,7 @@ class Player {
   Vector2 position { 200, 300 };
   float lastFrameTime = 0.f;
   int animationFrame = 0;
+  EventBus* bus = EventBus::getInstance();
 
   Texture2D textureToRender();
   int textureIndex();

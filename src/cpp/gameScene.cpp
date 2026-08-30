@@ -1,5 +1,6 @@
 #include "gameScene.h"
 #include "config.h"
+#include <memory>
 #include <raylib.h>
 
 void GameScene::tick () {
@@ -11,7 +12,10 @@ void GameScene::update() {
 }
 
 void GameScene::handleEvent() {
+  player->handleEvent();
 }
+
+void GameScene::sendEvents() { }
 
 void GameScene::checkCollisions() {
 }
