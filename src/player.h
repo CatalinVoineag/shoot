@@ -5,7 +5,7 @@
 #include "gun.h"
 
 class Player {
-  enum state { IDDLE, RUN };
+  enum state { IDLE, RUN };
 
   public:
   enum facing { LEFT, RIGHT, UP, DOWN };
@@ -34,7 +34,7 @@ class Player {
   Texture2D runTexture = LoadTexture("assets/player_run.png");
   void handleWallCollision();
   facing Facing = RIGHT;
-  state State = IDDLE;
+  state State = IDLE;
   Vector2 position { 200, 300 };
   float lastFrameTime = 0.f;
   int animationFrame = 0;

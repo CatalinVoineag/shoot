@@ -6,11 +6,19 @@ void Gun::handleEvent() { }
 
 void Gun::tick() {
   handleKeyPress();
+
+  lastFrameTime += GetFrameTime();
 }
 
 void Gun::update() {
+  if (lastFrameTime >= 0.012f) {
+    animationFrame = (animationFrame + 1) % textureIndex();
+    casingAnimationFrame = (casingAnimationFrame + 1) % casingFrames;
+    lastFrameTime -= 0.012f;
+  }
+
   Rectangle srcrec = {
-    0, 0,
+    animationFrame * width, 0,
     (player->getFacing() == Player::RIGHT) ? width : -width,
     height
   };
@@ -21,7 +29,38 @@ void Gun::update() {
     height,
   };
 
-  DrawTexturePro(idleTexture, srcrec, dstrec, {0, 0}, 0, WHITE);
+  DrawTexturePro(texture(), srcrec, dstrec, {0, 0}, 0, WHITE);
+  if (State == FIRE) {
+    // muzzle flash
+    srcrec = {
+      animationFrame * width, 0,
+      (player->getFacing() == Player::RIGHT) ? width : -width,
+      height
+    };
+    dstrec = {
+      gunPosition(player).x - 5,
+      gunPosition(player).y,
+      (player->getFacing() == Player::RIGHT) ? width : -width,
+      height,
+    };
+
+    DrawTexturePro(fireFxTexture, srcrec, dstrec, {0, 0}, 0, WHITE);
+
+    // bullet casing
+    srcrec = {
+      casingAnimationFrame * width, 0,
+      (player->getFacing() == Player::RIGHT) ? width : -width,
+      height
+    };
+    dstrec = {
+      gunPosition(player).x,
+      gunPosition(player).y,
+      (player->getFacing() == Player::RIGHT) ? width : -width,
+      height,
+    };
+
+    DrawTexturePro(casingFxTexture, srcrec, dstrec, {0, 0}, 0, WHITE);
+  }
 }
 
 void Gun::handleMovement() {
@@ -31,7 +70,12 @@ void Gun::handleWallCollision() {
 }
 
 void Gun::handleKeyPress() {
-  if (IsKeyPressed(KEY_SPACE)) { PlaySound(fireSound); }
+  if (IsKeyPressed(KEY_SPACE)) { 
+    PlaySound(fireSound);
+    State = FIRE;
+  } else if (endAnimation()) {
+    State = IDLE;
+  }
 }
 
 Rectangle Gun::gunPosition(Player* player) {
@@ -48,3 +92,26 @@ Rectangle Gun::gunPosition(Player* player) {
   return rect;
 }
 
+Texture2D Gun::texture() {
+  switch(State) {
+    case IDLE:
+      return idleTexture;
+    case FIRE:
+      return singleFireTexture;
+  }
+}
+
+int Gun::textureIndex() {
+  switch(State) {
+    case IDLE:
+      return 1;
+    case FIRE:
+      return 16;
+  }
+}
+
+bool Gun::endAnimation() {
+  return !IsKeyPressed(KEY_SPACE) &&
+    animationFrame == textureIndex() - 1 &&
+    casingAnimationFrame == casingFrames - 1;
+}

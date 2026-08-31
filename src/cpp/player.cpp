@@ -57,7 +57,7 @@ void Player::handleMovement() {
     Facing = LEFT; 
   }
 
-  State = (Vector2Length(direction) > 0) ? RUN : IDDLE;
+  State = (Vector2Length(direction) > 0) ? RUN : IDLE;
 }
 
 void Player::handleWallCollision() {
@@ -65,18 +65,18 @@ void Player::handleWallCollision() {
 
 Texture2D Player::textureToRender() {
   switch(State) {
-  case Player::IDDLE:
+  case IDLE:
     return idleTexture;
-  case Player::RUN:
+  case RUN:
     return runTexture;
   }
 }
 
 int Player::textureIndex() {
   switch(State) {
-  case Player::IDDLE:
+  case IDLE:
     return 8;
-  case Player::RUN:
+  case RUN:
     return 6;
   }
 }
