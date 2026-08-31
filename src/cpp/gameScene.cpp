@@ -20,7 +20,6 @@ void GameScene::sendEvents() { }
 void GameScene::checkCollisions() {
 }
 
-
 void GameScene::render() {
   for(float i = 0.0f; i < GetScreenWidth(); i += TERRAIN_TILE_SIZE) {
     for(float y = 0.0f; y < GetScreenHeight(); y += TERRAIN_TILE_SIZE) {

@@ -4,6 +4,8 @@
 
 void Gun::handleEvent() { }
 
+Gun::Gun(Entity *owner) : Component(owner), player(static_cast<Player *>(owner)) {}
+
 void Gun::tick() {
   handleKeyPress();
 
@@ -30,6 +32,10 @@ void Gun::update() {
   };
 
   DrawTexturePro(texture(), srcrec, dstrec, {0, 0}, 0, WHITE);
+  // We have too many animations
+  // Maybe we need an animation class/component
+  // Where the component handles when its done animating
+  // And the player just passes in what it wants animating
   if (State == FIRE) {
     // muzzle flash
     srcrec = {

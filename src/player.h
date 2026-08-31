@@ -2,14 +2,17 @@
 #include <memory>
 #include <raylib.h>
 #include "engine/eventBus.h"
+#include "engine/ecs/entity.h"
 #include "gun.h"
 
-class Player {
+class Player : public Entity {
   enum state { IDLE, RUN };
 
   public:
   enum facing { LEFT, RIGHT, UP, DOWN };
-  Player() : gun(std::make_shared<Gun>(this)) {}
+  Player() {
+    gun = addComponent<Gun>();
+  };
   void tick();
   void update();
   void handleEvent();
@@ -18,7 +21,7 @@ class Player {
   void unload() {
     UnloadTexture(idleTexture);
     UnloadTexture(runTexture);
-    gun->unload();
+    // gun->unload();
   }
 
   Vector2 getPosition() {
@@ -39,7 +42,7 @@ class Player {
   float lastFrameTime = 0.f;
   int animationFrame = 0;
   EventBus* bus = EventBus::getInstance();
-  std::shared_ptr<Gun> gun;
+  Gun* gun;
 
   Texture2D textureToRender();
   int textureIndex();

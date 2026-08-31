@@ -1,14 +1,17 @@
 #pragma once
 #include <raylib.h>
+#include "engine/ecs/component.h"
 #include "engine/eventBus.h"
 
 class Player;
 
-class Gun {
+class Gun : public Component {
   public:
   enum facing { LEFT, RIGHT };
   enum state { RELOAD, IDLE, FIRE };
-  Gun(Player* p) : player(p) {}
+  Gun(Entity *owner);
+
+  // Do we need these or can we rely on component tick?
   void tick();
   void update();
   void handleEvent();
