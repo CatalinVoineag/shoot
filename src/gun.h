@@ -2,10 +2,13 @@
 #include <raylib.h>
 #include "engine/eventBus.h"
 
+class Player;
+
 class Gun {
   public:
   enum facing { LEFT, RIGHT };
   enum state { RELOAD, IDDLE, SHOOT };
+  Gun(Player* p) : player(p) {}
   void tick();
   void update();
   void handleEvent();
@@ -33,5 +36,9 @@ class Gun {
   float lastFrameTime = 0.f;
   int animationFrame = 0;
   EventBus* bus = EventBus::getInstance();
-};
+  Player* player;
+  float width = 126.f; 
+  float height = 48.f; 
 
+  Rectangle gunPosition(Player* player);
+};

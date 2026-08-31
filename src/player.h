@@ -5,11 +5,11 @@
 #include "gun.h"
 
 class Player {
-  enum facing { LEFT, RIGHT, UP, DOWN };
   enum state { IDDLE, RUN };
 
   public:
-  Player() : gun(std::make_shared<Gun>()) {}
+  enum facing { LEFT, RIGHT, UP, DOWN };
+  Player() : gun(std::make_shared<Gun>(this)) {}
   void tick();
   void update();
   void handleEvent();
@@ -23,6 +23,10 @@ class Player {
 
   Vector2 getPosition() {
     return position;
+  }
+
+  facing getFacing() {
+    return Facing;
   }
 
   private:
