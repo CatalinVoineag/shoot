@@ -2,11 +2,12 @@
 #include <raylib.h>
 #include "bullet.h"
 #include "engine/ecs/component.h"
+#include "engine/ecs/entity.h"
 #include "engine/eventBus.h"
 
 class Player;
 
-class Gun : public Component {
+class Gun : public Entity {
   public:
   enum facing { LEFT, RIGHT };
   enum state { RELOAD, IDLE, FIRE };

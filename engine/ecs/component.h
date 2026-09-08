@@ -6,6 +6,7 @@ class Component {
   public:
   Component(Entity* Owner) : Owner(Owner) {}
   virtual void initialize() {}
+  virtual ~Component() = default;
   virtual void handleEvent() {};
   virtual void tick() {};
   virtual void render() {};

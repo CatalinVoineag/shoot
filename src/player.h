@@ -11,7 +11,7 @@ class Player : public Entity {
   public:
   enum facing { LEFT, RIGHT, UP, DOWN };
   Player() {
-    gun = addComponent<Gun>();
+    gun = addEntity<Gun>();
   };
   void tick();
   void update();

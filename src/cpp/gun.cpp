@@ -5,7 +5,7 @@
 
 void Gun::handleEvent() { }
 
-Gun::Gun(Entity *owner) : Component(owner), player(static_cast<Player *>(owner)) {}
+Gun::Gun(Entity *owner) : Entity(owner), player(static_cast<Player *>(owner)) {}
 
 void Gun::tick() {
   handleKeyPress();
