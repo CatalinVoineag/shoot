@@ -1,4 +1,5 @@
 #include "gun.h"
+#include "bullet.h"
 #include "player.h"
 #include "raylib.h"
 
@@ -10,6 +11,7 @@ void Gun::tick() {
   handleKeyPress();
 
   lastFrameTime += GetFrameTime();
+  bullet.tick();
 }
 
 void Gun::update() {
@@ -66,7 +68,10 @@ void Gun::update() {
     };
 
     DrawTexturePro(casingFxTexture, srcrec, dstrec, {0, 0}, 0, WHITE);
+    bullet.fire();
   }
+
+  bullet.update();
 }
 
 void Gun::handleMovement() {
@@ -117,7 +122,5 @@ int Gun::textureIndex() {
 }
 
 bool Gun::endAnimation() {
-  return !IsKeyPressed(KEY_SPACE) &&
-    animationFrame == textureIndex() - 1 &&
-    casingAnimationFrame == casingFrames - 1;
+  return !IsKeyPressed(KEY_SPACE) && animationFrame == textureIndex() - 1;
 }

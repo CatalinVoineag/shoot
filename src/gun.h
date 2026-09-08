@@ -1,5 +1,6 @@
 #pragma once
 #include <raylib.h>
+#include "bullet.h"
 #include "engine/ecs/component.h"
 #include "engine/eventBus.h"
 
@@ -51,6 +52,7 @@ class Gun : public Component {
   float width = 128.f; 
   float height = 48.f; 
   Rectangle gunPosition(Player* player);
+  Bullet bullet = Bullet();
 
   Texture2D texture();
   int textureIndex();
