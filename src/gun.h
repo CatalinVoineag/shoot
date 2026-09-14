@@ -53,7 +53,7 @@ class Gun : public Entity {
   float width = 128.f; 
   float height = 48.f; 
   Rectangle gunPosition(Player* player);
-  Bullet bullet = Bullet();
+  Bullet* bullet;
 
   Texture2D texture();
   int textureIndex();
