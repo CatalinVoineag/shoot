@@ -2,6 +2,7 @@
 #include "bullet.h"
 #include "player.h"
 #include "raylib.h"
+#include "raymath.h"
 
 void Gun::handleEvent() { }
 
@@ -36,7 +37,14 @@ void Gun::update() {
     height,
   };
 
-  DrawTexturePro(texture(), srcrec, dstrec, {0, 0}, 0, WHITE);
+  Vector2 direction = Vector2Normalize(
+    Vector2Subtract(GetMousePosition(), {gunPosition(player).x, gunPosition(player).y})
+  );
+  Vector2 rightDirection = {1.f, 0.f};
+  float angle = Vector2Angle(rightDirection, direction) * RAD2DEG;
+  float allowedAngle = std::max(-45.f, std::min(45.f, angle));
+
+  DrawTexturePro(texture(), srcrec, dstrec, {0, 0}, allowedAngle, WHITE);
   // We have too many animations
   // Maybe we need an animation class/component
   // Where the component handles when its done animating
@@ -85,7 +93,7 @@ void Gun::handleWallCollision() {
 }
 
 void Gun::handleKeyPress() {
-  if (IsKeyPressed(KEY_SPACE)) { 
+  if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) { 
     PlaySound(fireSound);
     bullets.emplace_back(addEntity<Bullet>());
     State = FIRE;
