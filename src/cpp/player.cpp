@@ -3,10 +3,6 @@
 #include "raymath.h"
 #include "config.h"
 
-const inline int PIXELS_PER_METER{50};
-// Meters per second
-const inline float PLAYER_SPEED{10.f};
-
 void Player::handleEvent() { }
 
 void Player::tick() {

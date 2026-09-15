@@ -1,15 +1,20 @@
 #include "gun.h"
+#include "bullet.h"
 #include "player.h"
 #include "raylib.h"
 
 void Gun::handleEvent() { }
 
-Gun::Gun(Entity *owner) : Component(owner), player(static_cast<Player *>(owner)) {}
+Gun::Gun(Entity *owner) : Entity(owner), player(static_cast<Player *>(owner)) {
+}
 
 void Gun::tick() {
   handleKeyPress();
 
   lastFrameTime += GetFrameTime();
+  for (auto bullet : bullets) {
+    bullet->tick();
+  }
 }
 
 void Gun::update() {
@@ -67,6 +72,10 @@ void Gun::update() {
 
     DrawTexturePro(casingFxTexture, srcrec, dstrec, {0, 0}, 0, WHITE);
   }
+
+  for (auto bullet : bullets) {
+    bullet->update();
+  }
 }
 
 void Gun::handleMovement() {
@@ -78,6 +87,7 @@ void Gun::handleWallCollision() {
 void Gun::handleKeyPress() {
   if (IsKeyPressed(KEY_SPACE)) { 
     PlaySound(fireSound);
+    bullets.emplace_back(addEntity<Bullet>());
     State = FIRE;
   } else if (endAnimation()) {
     State = IDLE;
@@ -117,7 +127,5 @@ int Gun::textureIndex() {
 }
 
 bool Gun::endAnimation() {
-  return !IsKeyPressed(KEY_SPACE) &&
-    animationFrame == textureIndex() - 1 &&
-    casingAnimationFrame == casingFrames - 1;
+  return !IsKeyPressed(KEY_SPACE) && animationFrame == textureIndex() - 1;
 }
