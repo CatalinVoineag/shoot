@@ -6,7 +6,6 @@
 void Gun::handleEvent() { }
 
 Gun::Gun(Entity *owner) : Entity(owner), player(static_cast<Player *>(owner)) {
-  bullet = addEntity<Bullet>();
   // the Bullet should not depend on the gun for tick or update calls
   // I initialize a bullet, and it's fired
   // The bullet does its own animation, tick, update
@@ -18,7 +17,9 @@ void Gun::tick() {
   handleKeyPress();
 
   lastFrameTime += GetFrameTime();
-  bullet->tick();
+  for (auto bullet : bullets) {
+    bullet->tick();
+  }
 }
 
 void Gun::update() {
@@ -75,10 +76,11 @@ void Gun::update() {
     };
 
     DrawTexturePro(casingFxTexture, srcrec, dstrec, {0, 0}, 0, WHITE);
-    bullet->fire();
   }
 
-  bullet->update();
+  for (auto bullet : bullets) {
+    bullet->update();
+  }
 }
 
 void Gun::handleMovement() {
@@ -90,6 +92,7 @@ void Gun::handleWallCollision() {
 void Gun::handleKeyPress() {
   if (IsKeyPressed(KEY_SPACE)) { 
     PlaySound(fireSound);
+    bullets.emplace_back(addEntity<Bullet>());
     State = FIRE;
   } else if (endAnimation()) {
     State = IDLE;

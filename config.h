@@ -10,4 +10,4 @@ const inline float PLAYER_SPEED{10.f};
 
 
 //Bullet
-const inline float BULLET_SPEED{15.f};
+const inline float BULLET_SPEED{35.f};

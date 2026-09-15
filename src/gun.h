@@ -9,7 +9,6 @@ class Player;
 
 class Gun : public Entity {
   public:
-  enum facing { LEFT, RIGHT };
   enum state { RELOAD, IDLE, FIRE };
   Gun(Entity *owner);
 
@@ -29,8 +28,15 @@ class Gun : public Entity {
     UnloadSound(fireSound);
   }
 
-  Vector2 getPosition() {
-    return position;
+  Vector2 getMuzzlePosition() {
+    return Vector2{
+      gunPosition(player).x -5,
+      gunPosition(player).y
+    };
+  }
+
+  Player* getPlayer() {
+    return player;
   }
 
   private:
@@ -41,7 +47,6 @@ class Gun : public Entity {
   Wave fireWave = LoadWave("assets/sounds/556/single.wav");
   Sound fireSound = LoadSoundFromWave(fireWave);
   void handleWallCollision();
-  facing Facing = RIGHT;
   state State = IDLE;
   Vector2 position { 200, 300 };
   float lastFrameTime = 0.f;
@@ -53,7 +58,7 @@ class Gun : public Entity {
   float width = 128.f; 
   float height = 48.f; 
   Rectangle gunPosition(Player* player);
-  Bullet* bullet;
+  std::vector<Bullet*> bullets;
 
   Texture2D texture();
   int textureIndex();

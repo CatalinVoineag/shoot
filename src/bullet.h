@@ -9,6 +9,7 @@ class Gun;
 
 class Bullet : public Entity {
   enum state { RELOAD, IDLE, FIRE };
+  enum facing { RIGHT, LEFT };
   public:
   Bullet(Entity *owner);
   void tick();
@@ -16,8 +17,6 @@ class Bullet : public Entity {
   void handleEvent();
   void handleMovement();
   void handleKeyPress();
-
-  void fire() { State = FIRE; };
 
   void unload() {
     UnloadTexture(bulletTexture);
@@ -28,6 +27,7 @@ class Bullet : public Entity {
   std::optional<float>x;
   std::optional<float>y;
   float lastFrameTime = 0.f;
-  state State = IDLE;
+  state State = FIRE;
+  facing Facing;
   Gun* gun;
 };
