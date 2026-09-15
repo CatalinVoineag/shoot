@@ -26,7 +26,6 @@ class Bullet : public Entity {
   Texture2D bulletTexture = LoadTexture("assets/guns/ar/bullet.png");
   std::optional<float>x;
   std::optional<float>y;
-  float lastFrameTime = 0.f;
   state State = FIRE;
   facing Facing;
   Gun* gun;

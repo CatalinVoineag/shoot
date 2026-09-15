@@ -8,7 +8,6 @@ Bullet::Bullet(Entity *owner) : Entity(owner), gun(static_cast<Gun *>(owner)) {
   x = gun->getMuzzlePosition().x;
   y = gun->getMuzzlePosition().y;
   Facing = gun->getPlayer()->getFacing() == Player::RIGHT ? RIGHT : LEFT;
-
 }
 
 void Bullet::tick() {
